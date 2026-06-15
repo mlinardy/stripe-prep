@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pricing Analyst Glossary — Stripe Interview Prep</title>
+<style>
+  :root {
+    --bg: #0a2540;
+    --accent: #635bff;
+    --accent2: #00d4ff;
+    --text: #0a2540;
+    --muted: #6b7c93;
+  }
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    background: linear-gradient(135deg, #0a2540 0%, #1a3a5c 100%);
+    color: var(--text);
+  }
+
+  /* ---- Sidebar (shared) ---- */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 210px;
+    height: 100vh;
+    background: #07203a;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    z-index: 30;
+    padding: 20px 16px;
+    overflow-y: auto;
+  }
+  #sidebar .brand {
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  #sidebar .brand-sub {
+    color: #8094b3;
+    font-size: 11px;
+    margin-bottom: 20px;
+  }
+  #sidebar nav a {
+    display: block;
+    color: #cfd8e8;
+    text-decoration: none;
+    font-size: 13.5px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  #sidebar nav a:hover {
+    background: rgba(255,255,255,0.06);
+    color: white;
+  }
+  #sidebar nav a.active {
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+  }
+
+  /* ---- Main content ---- */
+  #main {
+    margin-left: 210px;
+    min-height: 100vh;
+    padding: 28px 36px 60px;
+  }
+  #main h1 {
+    color: white;
+    margin: 0 0 4px;
+    font-size: 22px;
+  }
+  #main .subtitle {
+    color: #b8c4d9;
+    font-size: 13.5px;
+    margin: 0 0 20px;
+  }
+
+  #search-box {
+    width: 100%;
+    max-width: 480px;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.06);
+    color: white;
+    font-size: 14px;
+    margin-bottom: 24px;
+  }
+  #search-box::placeholder { color: #8094b3; }
+  #search-box:focus { outline: 2px solid var(--accent2); background: rgba(255,255,255,0.1); }
+
+  .category {
+    margin-bottom: 28px;
+  }
+  .category h2 {
+    color: var(--accent2);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+  }
+  .term-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 14px;
+  }
+  .term-card {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.18);
+  }
+  .term-card h3 {
+    margin: 0 0 4px;
+    font-size: 15px;
+    color: var(--accent);
+  }
+  .term-card .abbr {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .term-card p {
+    font-size: 13px;
+    line-height: 1.5;
+    margin: 8px 0 0;
+  }
+  .term-card .example {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: #f0eeff;
+    border-radius: 6px;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #3d3a8c;
+  }
+  .term-card .example b { color: var(--accent); }
+
+  .term-card.hidden { display: none; }
+  .category.hidden { display: none; }
+
+  #no-results {
+    color: #b8c4d9;
+    font-size: 14px;
+    display: none;
+    margin-top: 20px;
+  }
+</style>
+</head>
+<body>
+
+<div id="sidebar">
+  <div class="brand">📎 Stripe Prep Hub</div>
+  <div class="brand-sub">Pricing Analyst interview kit</div>
+  <nav>
+    <a href="stripe_pricing_analyst_map.html">🗺️ 360° Business Map</a>
+    <a href="pricing_glossary.html" class="active">📖 Pricing Glossary</a>
+  </nav>
+</div>
+
+<div id="main">
+  <h1>📖 Pricing Analyst Glossary</h1>
+  <p class="subtitle">Core metrics, pricing-model vocabulary, and payments-industry terms for the Stripe Pricing Analyst screen. Search to filter, or scroll by category.</p>
+
+  <input id="search-box" type="text" placeholder="Search a term, e.g. 'take rate', 'NRR', 'interchange'..." oninput="filterTerms(this.value)">
+  <div id="no-results">No terms match your search.</div>
+
+  <!-- ============================================================ -->
+  <div class="category" data-cat="volume">
+    <h2>1. Volume & Scale Metrics</h2>
+    <div class="term-grid">
+
+      <div class="term-card" data-term="gmv gross merchandise value">
+        <h3>GMV <span class="abbr">Gross Merchandise Value</span></h3>
+        <p>Total dollar value of goods/services sold through a platform or marketplace, before fees, refunds, or returns are deducted.</p>
+        <div class="example"><b>Example:</b> A marketplace built on Stripe Connect does $50M in GMV this quarter. Stripe doesn't earn revenue on all $50M — only on the portion it processes, multiplied by its take rate.</div>
+      </div>
+
+      <div class="term-card" data-term="tpv total payment volume">
+        <h3>TPV <span class="abbr">Total Payment Volume</span></h3>
+        <p>The total dollar amount of transactions processed through Stripe's payment rails — Stripe's equivalent of "throughput." The base on which take rate is calculated.</p>
+        <div class="example"><b>Example:</b> Stripe processed $1.4T in TPV in 2024 (+38% YoY), generating ~$5.1B in net revenue — a ~0.36% blended take rate.</div>
+      </div>
+
+      <div class="term-card" data-term="authorization rate auth rate approval rate">
+        <h3>Authorization Rate</h3>
+        <p>The % of payment attempts that are approved by the card network/issuing bank. Higher authorization rates mean more successful transactions without any change in pricing.</p>
+        <div class="example"><b>Example:</b> Hertz saw a 4% increase in authorization rates after moving to Stripe — this directly grows TPV (and thus revenue) with zero price change, a "value-based" growth lever.</div>
+      </div>
+
+      <div class="term-card" data-term="active accounts active merchants">
+        <h3>Active Accounts / Active Merchants</h3>
+        <p>The number of merchants or end-users actively transacting on the platform in a given period — the denominator for per-merchant revenue metrics.</p>
+        <div class="example"><b>Example:</b> PayPal reports 426M active accounts (391M consumer + 35M merchant) — a scale metric used to compare network size across competitors.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <div class="category" data-cat="revenue">
+    <h2>2. Revenue & Profitability Metrics</h2>
+    <div class="term-grid">
+
+      <div class="term-card" data-term="net revenue">
+        <h3>Net Revenue</h3>
+        <p>Revenue Stripe retains after passing through interchange fees and card network costs to issuing banks and card networks. This is the "real" revenue line for take-rate calculations.</p>
+        <div class="example"><b>Example:</b> Stripe's 2024 net revenue was ~$5.1B on $1.4T of TPV processed — the rest of the gross fee collected flows through to banks/networks as interchange.</div>
+      </div>
+
+      <div class="term-card" data-term="gross revenue gross profit">
+        <h3>Gross Revenue / Gross Profit</h3>
+        <p>Gross revenue = total fees charged to customers before costs. Gross profit = revenue minus direct costs of delivering the service (e.g., processing costs, interchange, infrastructure).</p>
+        <div class="example"><b>Example:</b> Block reported ~$22.1B gross revenue but ~$8.9B gross profit in 2024 — gross profit is the more comparable "apples to apples" metric across payment companies with different fee structures.</div>
+      </div>
+
+      <div class="term-card" data-term="take rate blended take rate">
+        <h3>Take Rate</h3>
+        <p>Net revenue ÷ payment volume processed, usually expressed in basis points (bps) or as a %. The core "how much do we keep per dollar processed" metric for a payments Pricing Analyst.</p>
+        <div class="example"><b>Example:</b> Stripe's blended take rate is ~36 bps (0.36%) vs. Adyen's ~16 bps — Stripe captures more per dollar processed, partly via attach-rate of add-on products.</div>
+      </div>
+
+      <div class="term-card" data-term="basis points bps">
+        <h3>Basis Points (bps)</h3>
+        <p>A unit equal to 1/100th of a percentage point (1 bps = 0.01%). Used because take rates are very small percentages and "bps" avoids awkward decimals.</p>
+        <div class="example"><b>Example:</b> "Our take rate moved from 34 bps to 36 bps" is easier to discuss than "0.34% to 0.36%."</div>
+      </div>
+
+      <div class="term-card" data-term="effective rate list price price realization">
+        <h3>Effective Rate vs. List Price / Price Realization</h3>
+        <p><b>List price</b> = the published headline rate (e.g., 2.9% + $0.30). <b>Effective rate</b> = the actual average rate a customer pays after volume discounts/negotiation. <b>Price realization</b> = effective rate ÷ list price, showing how much of the "sticker price" is actually captured.</p>
+        <div class="example"><b>Example:</b> An enterprise merchant negotiates down from the 2.9%+30¢ list price to an effective ~2.2% — a price realization of roughly 75%.</div>
+      </div>
+
+      <div class="term-card" data-term="contribution margin unit economics">
+        <h3>Contribution Margin / Unit Economics</h3>
+        <p>Revenue per transaction (or per customer) minus the variable costs to serve it — e.g., interchange, fraud losses, infrastructure, support. Used to check whether a pricing tier or discount is still profitable.</p>
+        <div class="example"><b>Example:</b> Before approving a large volume discount, a Pricing Analyst checks whether the contribution margin on that customer's transactions stays positive after interchange and fraud costs.</div>
+      </div>
+
+      <div class="term-card" data-term="interchange fee">
+        <h3>Interchange Fee</h3>
+        <p>A fee paid to the card-issuing bank on every card transaction, set by card networks (Visa, Mastercard, etc.) — NOT set by Stripe. Stripe passes this cost through (bundled into its flat rate or itemized in interchange-plus pricing).</p>
+        <div class="example"><b>Example:</b> Within Stripe's 2.9%+30¢ rate, a large portion is interchange that flows to the cardholder's bank — Stripe's actual markup is much smaller than the headline rate suggests.</div>
+      </div>
+
+      <div class="term-card" data-term="float income interest income">
+        <h3>Float Income / Interest Income</h3>
+        <p>Revenue earned from interest on customer funds held temporarily before payout (e.g., Stripe Treasury balances). Highly sensitive to prevailing interest rates.</p>
+        <div class="example"><b>Example:</b> When interest rates rise, float income on held balances increases — but this isn't "pricing" revenue and must be modeled separately from take-rate-driven revenue.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <div class="category" data-cat="percustomer">
+    <h2>3. Per-Customer / Unit Economics</h2>
+    <div class="term-grid">
+
+      <div class="term-card" data-term="arpu revenue per merchant rpm">
+        <h3>ARPU / Revenue per Merchant</h3>
+        <p>Average Revenue Per User (or Merchant) = total net revenue ÷ number of active merchants over a period. Tracks how "deeply monetized" the customer base is — a key metric for attach-rate and upsell strategy.</p>
+        <div class="example"><b>Example:</b> If revenue per merchant rises while merchant count stays flat, it signals successful upsell/attach (more merchants adopting Billing, Tax, Radar, etc.) rather than just new-logo growth.</div>
+      </div>
+
+      <div class="term-card" data-term="acv annual contract value">
+        <h3>ACV <span class="abbr">Annual Contract Value</span></h3>
+        <p>The annualized dollar value of a customer's contract — common in enterprise, sales-led pricing where deals are negotiated rather than self-serve.</p>
+        <div class="example"><b>Example:</b> A large platform signs a 3-year deal worth $9M total — its ACV is $3M, used to compare deal sizes across the enterprise sales pipeline.</div>
+      </div>
+
+      <div class="term-card" data-term="cac customer acquisition cost">
+        <h3>CAC <span class="abbr">Customer Acquisition Cost</span></h3>
+        <p>Total sales & marketing spend divided by the number of new customers acquired in a period. Used alongside LTV to judge whether acquisition spend is sustainable.</p>
+        <div class="example"><b>Example:</b> If Stripe spends $50M on sales/marketing and acquires 10,000 new paying merchants, CAC = $5,000 per merchant.</div>
+      </div>
+
+      <div class="term-card" data-term="ltv lifetime value">
+        <h3>LTV <span class="abbr">Customer Lifetime Value</span></h3>
+        <p>The total net revenue (or profit) expected from a customer over the entire relationship, factoring in retention/churn and expected attach/upsell over time.</p>
+        <div class="example"><b>Example:</b> A merchant with $2M/year in TPV and a 36 bps take rate generates ~$7,200/year — multiplied by an expected 8-year lifespan, LTV ≈ $57,600 (before discounting).</div>
+      </div>
+
+      <div class="term-card" data-term="ltv cac ratio">
+        <h3>LTV:CAC Ratio</h3>
+        <p>The ratio of customer lifetime value to acquisition cost. A common rule of thumb is that a ratio above 3:1 indicates healthy, sustainable growth economics.</p>
+        <div class="example"><b>Example:</b> LTV of $57,600 vs. CAC of $5,000 gives an LTV:CAC ratio of ~11.5:1 — comfortably above the 3:1 benchmark.</div>
+      </div>
+
+      <div class="term-card" data-term="payback period">
+        <h3>Payback Period</h3>
+        <p>The time it takes for the cumulative margin/revenue from a customer to recoup the cost of acquiring them (CAC).</p>
+        <div class="example"><b>Example:</b> If a merchant generates ~$600/month in net revenue and CAC was $5,000, the payback period is just over 8 months.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <div class="category" data-cat="growth">
+    <h2>4. Growth & Retention Metrics</h2>
+    <div class="term-grid">
+
+      <div class="term-card" data-term="attach rate">
+        <h3>Attach Rate</h3>
+        <p>The % of customers using a core product who also adopt an additional product (e.g., the % of Payments customers who also use Billing, Tax, or Radar). One of the most important levers for growing revenue per merchant without changing core pricing.</p>
+        <div class="example"><b>Example:</b> If 40% of Payments customers also use Stripe Tax, raising that attach rate to 50% directly increases blended take rate — a classic Pricing Analyst growth initiative.</div>
+      </div>
+
+      <div class="term-card" data-term="upsell">
+        <h3>Upsell</h3>
+        <p>Increasing revenue from an existing customer by moving them to a higher-priced tier, plan, or usage level (e.g., from Billing to Billing Scale, or from standard Radar to Radar for Fraud Teams).</p>
+        <div class="example"><b>Example:</b> A merchant on standard Radar ($0.05/screen) upgrades to Radar for Fraud Teams ($0.07/screen) for better ML-driven fraud detection — an upsell within the same product family.</div>
+      </div>
+
+      <div class="term-card" data-term="cross sell">
+        <h3>Cross-sell</h3>
+        <p>Selling a different (adjacent) product to an existing customer, rather than upgrading their current product. Distinct from attach rate in that it's often initiated by a sales/marketing motion rather than self-serve adoption.</p>
+        <div class="example"><b>Example:</b> A Payments customer is cross-sold Stripe Capital for business financing — a different product line entirely, but enabled by the existing payments relationship and data.</div>
+      </div>
+
+      <div class="term-card" data-term="nrr ndr net revenue retention net dollar retention">
+        <h3>NRR / NDR <span class="abbr">Net Revenue (Dollar) Retention</span></h3>
+        <p>The % of recurring revenue retained AND expanded from an existing customer cohort over a year, including upsells, cross-sells, downgrades, and churn. NRR > 100% means expansion outweighs losses.</p>
+        <div class="example"><b>Example:</b> If a $10M cohort of merchants generates $11.2M one year later (after some churned and others expanded usage), NRR = 112% — a strong sign that attach/upsell strategy is working.</div>
+      </div>
+
+      <div class="term-card" data-term="grr gross revenue retention">
+        <h3>GRR <span class="abbr">Gross Revenue Retention</span></h3>
+        <p>Like NRR, but EXCLUDING any expansion/upsell — it measures pure retention (churn and downgrades only), capped at 100%. The gap between GRR and NRR shows how much of retained growth comes from expansion vs. just "not losing" customers.</p>
+        <div class="example"><b>Example:</b> GRR of 92% with NRR of 112% means churn/downgrades cost 8 points, but upsell/expansion added back 20 points — expansion is the dominant growth driver.</div>
+      </div>
+
+      <div class="term-card" data-term="churn rate logo churn revenue churn">
+        <h3>Churn Rate (Logo vs. Revenue)</h3>
+        <p><b>Logo churn</b> = % of customers (accounts) lost in a period. <b>Revenue churn</b> = % of revenue lost from departing/downgrading customers. The two can diverge significantly (e.g., losing many small customers but little revenue).</p>
+        <div class="example"><b>Example:</b> Losing 5% of merchant accounts (mostly very small ones) might only translate to 1% revenue churn if those accounts contributed little volume.</div>
+      </div>
+
+      <div class="term-card" data-term="cohort analysis">
+        <h3>Cohort Analysis</h3>
+        <p>Tracking groups of customers acquired in the same period (a "cohort") over time to see how their revenue, usage, or retention evolves — often used to validate whether a pricing change improved or hurt long-term value.</p>
+        <div class="example"><b>Example:</b> Comparing the revenue trajectory of merchants onboarded before vs. after a Billing price change shows whether the new pricing improved attach rate and retention for the newer cohort.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <div class="category" data-cat="strategy">
+    <h2>5. Pricing Models & Strategy</h2>
+    <div class="term-grid">
+
+      <div class="term-card" data-term="interchange plus pricing">
+        <h3>Interchange-Plus Pricing</h3>
+        <p>A pricing structure where the merchant pays the actual interchange + network fees (pass-through, fully itemized) plus a separate, transparent markup. More transparent but more complex than flat-rate pricing.</p>
+        <div class="example"><b>Example:</b> Adyen prices this way — large enterprises can see exactly what goes to the card networks vs. what Adyen keeps, which builds trust but requires more sophistication to evaluate.</div>
+      </div>
+
+      <div class="term-card" data-term="flat rate blended pricing">
+        <h3>Flat-Rate / Blended Pricing</h3>
+        <p>A single all-in rate charged regardless of card type, region, or interchange variation (e.g., 2.9% + $0.30). Simple for merchants to understand, but Stripe's actual margin varies transaction-by-transaction depending on the underlying interchange cost.</p>
+        <div class="example"><b>Example:</b> Stripe's headline 2.9%+30¢ rate is the same whether a customer pays with a low-interchange debit card or a high-interchange rewards credit card — Stripe absorbs the variance.</div>
+      </div>
+
+      <div class="term-card" data-term="tiered pricing">
+        <h3>Tiered Pricing</h3>
+        <p>Charging different rates based on product tier, account type, or usage level. Common in SaaS and platform products.</p>
+        <div class="example"><b>Example:</b> Stripe Connect has Standard (no extra platform fee), Express, and Custom account tiers, each with different monthly per-account fees ($2/active account for Express/Custom).</div>
+      </div>
+
+      <div class="term-card" data-term="volume based discounting volume discount">
+        <h3>Volume-Based Discounting</h3>
+        <p>Reducing the effective rate as a customer's processing volume increases — typically negotiated for large/enterprise accounts. A core mechanism behind the gap between list price and effective rate.</p>
+        <div class="example"><b>Example:</b> A merchant processing $500M/year might negotiate a rate well below the 2.9%+30¢ list price, since Stripe's marginal cost per dollar processed declines at scale.</div>
+      </div>
+
+      <div class="term-card" data-term="usage based pricing metered billing">
+        <h3>Usage-Based / Metered Pricing</h3>
+        <p>Price scales directly with consumption — per API call, per screened transaction, per seat-month, etc. Increasingly important for AI-native and API-first businesses.</p>
+        <div class="example"><b>Example:</b> Stripe Radar charges $0.05 per screened transaction (standard) or $0.07 (advanced) — price scales linearly with the number of transactions screened, not a flat subscription.</div>
+      </div>
+
+      <div class="term-card" data-term="value based pricing">
+        <h3>Value-Based Pricing</h3>
+        <p>Setting price based on the value delivered to the customer (e.g., incremental revenue generated), rather than purely on cost-to-serve.</p>
+        <div class="example"><b>Example:</b> Stripe's Optimized Checkout Suite helped Turo capture $114M in additional annual revenue — pricing for such a feature can be partially justified by the value created, not just Stripe's cost to build it.</div>
+      </div>
+
+      <div class="term-card" data-term="cost plus pricing">
+        <h3>Cost-Plus Pricing</h3>
+        <p>Price = cost to deliver the service + a fixed margin. Simple and defensible, but can leave money on the table for high-value features, or overprice low-value ones.</p>
+        <div class="example"><b>Example:</b> Pricing Stripe Tax purely as "cost of compliance infrastructure + X% margin" rather than considering the value of avoiding tax penalties for the merchant.</div>
+      </div>
+
+      <div class="term-card" data-term="bundling unbundling">
+        <h3>Bundling / Unbundling</h3>
+        <p><b>Bundling</b> = combining multiple services into a single price (simplicity, but less price discrimination). <b>Unbundling</b> = breaking products into separate, à-la-carte priced add-ons (more granular monetization, but more complex billing).</p>
+        <div class="example"><b>Example:</b> Stripe bundles interchange + network fees + markup into one flat rate (bundling), but sells Billing, Tax, and Radar as separate add-on fees (unbundling) — a hybrid strategy.</div>
+      </div>
+
+      <div class="term-card" data-term="freemium">
+        <h3>Freemium</h3>
+        <p>Offering a free base tier to drive adoption and reduce friction, monetizing later via premium features, higher usage tiers, or add-ons.</p>
+        <div class="example"><b>Example:</b> Stripe Atlas charges a low flat fee (~$500) for company incorporation — a near-loss-leader that funnels new startups into the broader Stripe ecosystem where they'll pay processing fees.</div>
+      </div>
+
+      <div class="term-card" data-term="price elasticity demand elasticity">
+        <h3>Price Elasticity of Demand</h3>
+        <p>A measure of how much demand (transaction volume) changes in response to a price change. High elasticity = small price increases cause large volume drops; low elasticity = customers are relatively price-insensitive.</p>
+        <div class="example"><b>Example:</b> Raising the per-transaction fee for a small SMB merchant (high elasticity, many alternatives) might cause significant churn, while raising it for an enterprise deeply integrated into Stripe's APIs (low elasticity, high switching cost) may have minimal impact.</div>
+      </div>
+
+      <div class="term-card" data-term="willingness to pay wtp">
+        <h3>Willingness to Pay (WTP)</h3>
+        <p>The maximum price a customer would be willing to pay for a product or feature, often estimated through surveys (e.g., Van Westendorp Price Sensitivity Meter), conjoint analysis, or A/B price tests.</p>
+        <div class="example"><b>Example:</b> Before launching a new "AI fraud detection" tier, a Pricing Analyst might survey merchants to estimate WTP and set the $0.07/screen price for Radar for Fraud Teams accordingly.</div>
+      </div>
+
+      <div class="term-card" data-term="a b testing price experimentation">
+        <h3>A/B Testing / Price Experimentation</h3>
+        <p>Testing different prices, fee structures, or packaging on different customer segments (often randomized) to measure the causal impact on conversion, revenue, and churn before a full rollout.</p>
+        <div class="example"><b>Example:</b> Testing a 0.4% vs. 0.5% Billing fee on two random samples of new signups in a specific region, then comparing attach rate and revenue per merchant after 6 months.</div>
+      </div>
+
+      <div class="term-card" data-term="price discrimination segmentation">
+        <h3>Price Discrimination / Segmentation</h3>
+        <p>Charging different prices to different customer segments based on differences in willingness to pay, cost-to-serve, or competitive dynamics — common and legal in B2B (unlike many consumer contexts).</p>
+        <div class="example"><b>Example:</b> SMBs pay the standard 2.9%+30¢ list price, while large enterprises negotiate custom interchange-plus contracts — both are "fair" prices for very different cost structures and competitive alternatives.</div>
+      </div>
+
+      <div class="term-card" data-term="anchoring">
+        <h3>Anchoring</h3>
+        <p>A psychological pricing tactic where presenting a higher reference price first makes the actual price seem more reasonable by comparison.</p>
+        <div class="example"><b>Example:</b> Showing "Radar for Fraud Teams: $0.07/screening" next to "Standard Radar: $0.05/screening" anchors the perceived value of the premium tier.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <div class="category" data-cat="payments">
+    <h2>6. Payments-Specific & Risk Terms</h2>
+    <div class="term-grid">
+
+      <div class="term-card" data-term="chargeback dispute rate">
+        <h3>Chargeback / Dispute Rate</h3>
+        <p>The % of transactions disputed by cardholders (claiming fraud, non-delivery, etc.). High dispute rates can trigger penalties or account restrictions from card networks — a cost that pricing/risk teams must factor in.</p>
+        <div class="example"><b>Example:</b> A merchant with a 1.5% dispute rate (above the ~1% network threshold) may face additional monitoring fees — Stripe's risk-based pricing/underwriting must account for this.</div>
+      </div>
+
+      <div class="term-card" data-term="fraud rate">
+        <h3>Fraud Rate</h3>
+        <p>The % of transactions identified as fraudulent. Stripe Radar exists specifically to reduce this — but fraud prevention pricing must balance catching fraud against blocking legitimate sales.</p>
+        <div class="example"><b>Example:</b> Aggressive Radar rules might cut fraud rate from 0.3% to 0.1%, but if false declines rise from 1% to 3% of legitimate transactions, the net revenue impact could be negative.</div>
+      </div>
+
+      <div class="term-card" data-term="false decline rate">
+        <h3>False Decline Rate</h3>
+        <p>The % of legitimate transactions incorrectly blocked by fraud rules — a hidden cost of overly aggressive fraud prevention, since it directly reduces merchant revenue (and thus Stripe's take-rate base).</p>
+        <div class="example"><b>Example:</b> Turo's $114M revenue gain via Stripe's Optimized Checkout Suite was partly about reducing false declines and improving authorization rates, not just fraud reduction.</div>
+      </div>
+
+      <div class="term-card" data-term="platform fee application fee">
+        <h3>Platform Fee / Application Fee</h3>
+        <p>A fee that a software platform or marketplace charges its own sellers, layered on top of Stripe's processing fee — enabled by Stripe Connect's "fee on a fee" model.</p>
+        <div class="example"><b>Example:</b> A marketplace charges sellers a 5% platform fee plus passes through Stripe's 2.9%+30¢ processing fee — Stripe earns its cut regardless, while the platform monetizes the marketplace relationship.</div>
+      </div>
+
+      <div class="term-card" data-term="revenue share">
+        <h3>Revenue Share</h3>
+        <p>An arrangement where revenue from a transaction or product is split between Stripe and a partner — e.g., a bank partner (Treasury) or card issuer (Issuing) sharing interchange income.</p>
+        <div class="example"><b>Example:</b> In Stripe Issuing, Stripe earns a portion of interchange generated when an issued card is used — shared with the issuing bank partner per their agreement.</div>
+      </div>
+
+      <div class="term-card" data-term="cross border fee fx markup">
+        <h3>Cross-Border Fee / FX Markup</h3>
+        <p>Additional fees (often ~+1% each) charged for transactions involving international cards or currency conversion — a major driver of why "effective" take rates exceed the headline domestic rate.</p>
+        <div class="example"><b>Example:</b> A US merchant's headline rate is 2.9%+30¢, but a sale to an international customer paying in a foreign currency could effectively cost ~4.9% once cross-border (+1%) and FX conversion (+1%) fees apply.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <div class="category" data-cat="market">
+    <h2>7. Market Sizing & Competitive Strategy</h2>
+    <div class="term-grid">
+
+      <div class="term-card" data-term="tam sam som total addressable market">
+        <h3>TAM / SAM / SOM</h3>
+        <p><b>TAM</b> (Total Addressable Market) = the entire market opportunity. <b>SAM</b> (Serviceable Addressable Market) = the portion reachable given your business model/geography. <b>SOM</b> (Serviceable Obtainable Market) = the realistic share you can capture given competition and resources.</p>
+        <div class="example"><b>Example:</b> TAM = all global digital payment volume; SAM = volume in markets/currencies Stripe supports; SOM = the share Stripe can realistically win given Adyen, PayPal, and others competing for the same merchants.</div>
+      </div>
+
+      <div class="term-card" data-term="market share">
+        <h3>Market Share</h3>
+        <p>The % of total market volume or revenue captured by a given company, used to benchmark competitive position and growth potential.</p>
+        <div class="example"><b>Example:</b> Stripe holds roughly 20-29% of the global online payment processing market, vs. PayPal's ~43% — together the two control ~65-75% of the market.</div>
+      </div>
+
+      <div class="term-card" data-term="blended take rate comparison competitive benchmarking">
+        <h3>Competitive Benchmarking</h3>
+        <p>Comparing your pricing, take rate, and product offerings against competitors to identify where you're over/under-priced or under/over-featured relative to the market.</p>
+        <div class="example"><b>Example:</b> Comparing Stripe's ~36 bps blended take rate to Adyen's ~16 bps highlights that Stripe monetizes more per dollar of volume — partly justified by a broader add-on product suite (Billing, Tax, Radar) that Adyen's single-platform model doesn't replicate as aggressively.</div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+function filterTerms(query) {
+  const q = query.trim().toLowerCase();
+  const categories = document.querySelectorAll('.category');
+  let anyVisible = false;
+
+  categories.forEach(cat => {
+    let catHasVisible = false;
+    cat.querySelectorAll('.term-card').forEach(card => {
+      const haystack = (card.dataset.term + ' ' + card.innerText).toLowerCase();
+      const match = q === '' || haystack.includes(q);
+      card.classList.toggle('hidden', !match);
+      if (match) catHasVisible = true;
+    });
+    cat.classList.toggle('hidden', !catHasVisible);
+    if (catHasVisible) anyVisible = true;
+  });
+
+  document.getElementById('no-results').style.display = anyVisible ? 'none' : 'block';
+}
+</script>
+
+</body>
+</html>

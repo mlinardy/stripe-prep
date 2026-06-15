@@ -21,9 +21,53 @@
     color: var(--text);
     overflow: hidden;
   }
+
+  /* ---- Sidebar ---- */
+  #sidebar {
+    position: fixed;
+    top: 0; left: 0;
+    width: 210px;
+    height: 100vh;
+    background: #07203a;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    z-index: 30;
+    padding: 20px 16px;
+    overflow-y: auto;
+  }
+  #sidebar .brand {
+    color: white;
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  #sidebar .brand-sub {
+    color: #8094b3;
+    font-size: 11px;
+    margin-bottom: 20px;
+  }
+  #sidebar nav a {
+    display: block;
+    color: #cfd8e8;
+    text-decoration: none;
+    font-size: 13.5px;
+    padding: 10px 12px;
+    border-radius: 8px;
+    margin-bottom: 6px;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  #sidebar nav a:hover {
+    background: rgba(255,255,255,0.06);
+    color: white;
+  }
+  #sidebar nav a.active {
+    background: var(--accent);
+    color: white;
+    font-weight: 600;
+  }
+
   #header {
     position: absolute;
-    top: 0; left: 0; right: 0;
+    top: 0; left: 210px; right: 0;
     padding: 14px 24px;
     color: white;
     z-index: 10;
@@ -43,7 +87,8 @@
   #legend .dot { display:inline-block; width:10px; height:10px; border-radius:50%; margin-right:4px; vertical-align:middle; }
 
   #chart-container {
-    width: 100%;
+    margin-left: 210px;
+    width: calc(100% - 210px);
     height: 100vh;
     cursor: grab;
   }
@@ -132,7 +177,7 @@
   }
   #hint {
     position: absolute;
-    bottom: 16px; left: 24px;
+    bottom: 16px; left: 234px;
     color: #b8c4d9;
     font-size: 12px;
     z-index: 10;
@@ -158,14 +203,24 @@
 </head>
 <body>
 
+<div id="sidebar">
+  <div class="brand">📎 Stripe Prep Hub</div>
+  <div class="brand-sub">Pricing Analyst interview kit</div>
+  <nav>
+    <a href="stripe_pricing_analyst_map.html" class="active">🗺️ 360° Business Map</a>
+    <a href="pricing_glossary.html">📖 Pricing Glossary</a>
+  </nav>
+</div>
+
 <div id="header">
-  <h1>💳 Stripe — 360° Business Map</h1>
+  <h1>💳 Stripe vs Competitors — 360° Business Map</h1>
   <p>Pricing Analyst interview prep · Click any node to expand/collapse · Click a leaf (●) for pricing, revenue &amp; challenge notes</p>
 </div>
 
 <div id="legend">
-  <span><i class="dot" style="background:#635bff"></i>Core / Company</span>
-  <span><i class="dot" style="background:#00d4ff"></i>Product Line</span>
+  <span><i class="dot" style="background:#635bff"></i>Industry</span>
+  <span><i class="dot" style="background:#ef476f"></i>Company</span>
+  <span><i class="dot" style="background:#00d4ff"></i>Business Line</span>
   <span><i class="dot" style="background:#ffd166"></i>Detail (click me)</span>
 </div>
 
@@ -190,9 +245,16 @@
 // Connect/Tax/Radar pricing pages, 2025 market analyses.
 // ============================================================
 const data = {
-  name: "Stripe",
+  name: "Payments Industry",
   category: "root",
   children: [
+    // ===========================================================
+    // STRIPE
+    // ===========================================================
+    {
+      name: "Stripe",
+      category: "company",
+      children: [
     // ---------------------------------------------------------
     {
       name: "Company Snapshot",
@@ -212,6 +274,22 @@ const data = {
               "Stripe is private — limited public visibility into segment-level profitability, making pricing trade-offs harder to benchmark externally.",
               "Balancing growth (lower prices to win volume) vs. profitability now that it's cash-flow positive.",
               "Pressure from investors/employees around eventual IPO and liquidity events."
+            ]
+          }
+        },
+        {
+          name: "2025 Annual Letter Update", category: "detail",
+          details: {
+            pricing: ["Continued 'robustly profitable' status funded 350+ product updates across 2025 — pricing/product teams scaled output without needing price increases to fund R&D."],
+            revenue: [
+              "Total volume processed: $1.9 trillion in 2025 (+34% YoY) — ~1.6% of global GDP.",
+              "Net revenue: ~$5.84B in 2025 (up from ~$5.1B in 2024).",
+              "Valuation: ~$159B (2026 tender offer), up from ~$106.7B in 2025.",
+              "Scale: powers 5M+ businesses directly or via platforms — including 90% of the Dow Jones Industrial Average, 80% of the Nasdaq 100, and 25% of all new Delaware corporations (via Atlas)."
+            ],
+            challenges: [
+              "Growth rate decelerated slightly (38%→34% YoY volume growth) — Pricing must increasingly drive growth via attach-rate/new-product monetization (Metronome, Bridge, Link) rather than pure TPV expansion.",
+              "Four major acquisitions in 12 months (Bridge $1.1B, Privy, Orum, Metronome ~$1B) — integrating multiple new pricing models (crypto settlement, wallet infra, orchestration, usage-based billing) into one coherent pricing architecture."
             ]
           }
         },
@@ -262,6 +340,32 @@ const data = {
             revenue: ["Example cited in 2024 letter: Turo captured $114M in additional annual revenue using Stripe's Optimized Checkout Suite — a 'value-based' pricing story (Stripe earns more because merchant earns more)."],
             challenges: ["Proving ROI of 'smart' features (one-click checkout, adaptive payment methods) to justify premium pricing vs. commodity processors."]
           }
+        },
+        {
+          name: "Link (One-Click Checkout)", category: "detail",
+          details: {
+            pricing: ["No additional fees — Link is built directly into existing Stripe payments integrations (Checkout, Elements, Payment Links) and monetized indirectly via the higher conversion/TPV it generates."],
+            revenue: [
+              "Businesses using Link see ~7% higher conversion from logged-in/returning customers, and up to 14% higher returning-customer conversion for businesses with large repeat bases.",
+              "Checkout is up to 3x faster for Link users — a network-effect product: the more merchants that adopt Link, the more consumers have saved payment details, improving conversion everywhere."
+            ],
+            challenges: [
+              "A free feature that drives Stripe's core monetization (more TPV) rather than charging directly — classic 'give away the wedge, monetize the base' pricing strategy.",
+              "Building a consumer payment network/wallet to compete with Shop Pay, PayPal, and Apple Pay — network effects take time and Stripe must win both merchant AND consumer adoption simultaneously.",
+              "2025: rolling out one-click Klarna (BNPL) within Link — expanding the wallet beyond cards raises new settlement/risk pricing questions."
+            ]
+          }
+        },
+        {
+          name: "Adaptive Pricing (Currency Localization)", category: "detail",
+          details: {
+            pricing: ["No additional fees on top of standard processing — automatically detects a customer's location (via IP) and displays/charges in their local currency across 150+ countries, on Checkout, Elements, Invoices, and Payment Links."],
+            revenue: ["Businesses using Adaptive Pricing see an average 17.8% uplift in cross-border revenue; ~90% of customers choose to check out in their local currency when offered the option."],
+            challenges: [
+              "Interesting pricing tension: Stripe already charges +1% for currency conversion on cross-border transactions — Adaptive Pricing increases the VOLUME of cross-border transactions (and thus FX fee revenue) even while being marketed as a 'free' localization feature.",
+              "2025 expansion to Elements and Hosted Invoice Page broadens where this volume/revenue uplift applies."
+            ]
+          }
         }
       ]
     },
@@ -290,6 +394,20 @@ const data = {
             pricing: ["Fee structure mirrors Billing; priced to support the rise of AI/API companies charging per-token, per-call, or per-seat hybrid models."],
             revenue: ["Growth area — AI-native companies (a fast-growing Stripe customer segment) need metered billing infrastructure."],
             challenges: ["Real-time metering at scale (latency, accuracy) and translating complex usage data into accurate invoices — directly relevant to 'how do you price a metered product' interview questions."]
+          }
+        },
+        {
+          name: "Metronome & the Revenue Suite", category: "detail",
+          details: {
+            pricing: [
+              "Metronome (usage-based billing platform) acquired Dec 2025 for ~$1B — joins Stripe's 'Revenue Suite' (Billing + Invoicing + Tax + Revenue Recognition + Metronome's metering engine).",
+              "Stripe Billing alone: 300,000+ companies, 200M+ active subscriptions, ~$500M revenue run rate — Metronome adds enterprise-grade real-time usage metering on top of this base."
+            ],
+            revenue: ["The combined Revenue Suite is on track for a $1B annual revenue run rate — explicitly called out in the 2025 letter as a major growth pillar alongside Connect, Capital, Treasury, Issuing, and Terminal."],
+            challenges: [
+              "Integrating an acquired metering platform (Metronome) into Stripe's existing Billing pricing model without disrupting 300K+ existing Billing customers or creating two competing usage-based pricing engines.",
+              "Metronome's customers were often large AI/SaaS companies with bespoke enterprise contracts — reconciling those negotiated rates with Stripe's more standardized Billing fee (0.5%/0.8%) is a live pricing-architecture question."
+            ]
           }
         }
       ]
@@ -366,6 +484,71 @@ const data = {
     },
     // ---------------------------------------------------------
     {
+      name: "Crypto & Stablecoin Infrastructure",
+      category: "line",
+      children: [
+        {
+          name: "Bridge & Tempo (Stablecoin Rails)", category: "detail",
+          details: {
+            pricing: [
+              "Bridge (stablecoin infrastructure) acquired Feb 2025 for ~$1.1B — monetizes via fees on stablecoin issuance, conversion, and settlement (an alternative 'rail' alongside card networks, with potentially much lower per-transaction cost for cross-border/B2B payments).",
+              "Tempo: a purpose-built payments blockchain (incubated with Paradigm) offering dedicated payment lanes and sub-second finality — infrastructure-layer investment, monetization likely via transaction/settlement fees once live."
+            ],
+            revenue: [
+              "Bridge's volume more than quadrupled in 2025; overall stablecoin payments volume on Stripe doubled to ~$400B (≈60% estimated to be B2B payments) — a fast-growing 'side rail' alongside the $1.9T card-based TPV.",
+              "Tempo is being piloted by Visa, Nubank, and Shopify for global payouts, embedded finance, and remittances — enterprise validation ahead of broad monetization."
+            ],
+            challenges: [
+              "Stablecoin rails could SUBSTITUTE for traditional card processing on cross-border/B2B flows — potentially lower take rate per dollar than card payments, a genuine 'cannibalization vs. new-market' pricing question.",
+              "Operating through 'crypto winter' headlines while stablecoin utility (especially for B2B settlement) keeps growing — regulatory and reputational uncertainty around crypto-adjacent products.",
+              "Pricing a brand-new blockchain network (Tempo) from scratch — no established comparable, and value depends on network effects not yet realized."
+            ]
+          }
+        },
+        {
+          name: "Privy (Digital Asset Accounts)", category: "detail",
+          details: {
+            pricing: [
+              "Privy (crypto wallet infrastructure) acquired June 2025 — combined with Bridge to launch 'digital asset accounts,' giving any business the infrastructure to hold/manage stablecoins as easily as a bank account.",
+              "Likely monetized similarly to Treasury (account fees / revenue share with rails) rather than a standalone per-transaction charge — though specific public pricing is not yet disclosed."
+            ],
+            revenue: ["Positions Stripe to capture wallet-infrastructure revenue for the wave of businesses (especially AI agents and platforms) that want to hold and move stablecoins natively — an adjacent market to Treasury's fiat bank accounts."],
+            challenges: [
+              "Embedded wallets raise custody, security, and regulatory questions (who is liable for lost/stolen digital assets?) — pricing must account for insurance/compliance overhead, similar to Treasury's bank-partner dependency.",
+              "Competing with native crypto-wallet infrastructure providers (e.g., Coinbase's wallet APIs, Fireblocks) who may have more crypto-native trust/credibility."
+            ]
+          }
+        }
+      ]
+    },
+    // ---------------------------------------------------------
+    {
+      name: "Orchestration & Financial Connections",
+      category: "line",
+      children: [
+        {
+          name: "Payment Orchestration (Orum)", category: "detail",
+          details: {
+            pricing: ["Orum (payment orchestration) acquired July 2025 — orchestration tools route transactions across MULTIPLE payment processors/rails (not just Stripe) to optimize for cost, authorization rate, or redundancy."],
+            revenue: ["Strategically defensive AND offensive: large enterprises increasingly demand multi-processor orchestration to avoid vendor lock-in — by OWNING an orchestration layer, Stripe can stay in the routing decision even when a merchant also uses a competitor (Adyen, Checkout.com) for some volume."],
+            challenges: [
+              "Direct tension with Stripe's core take-rate economics: a good orchestration tool might route SOME volume AWAY from Stripe to a cheaper processor for a given transaction type — pricing/incentive design must ensure Stripe still wins net revenue overall.",
+              "Pricing an orchestration product (subscription? per-routed-transaction fee?) when its core value proposition is 'optimize away from any single processor's fees,' including Stripe's own."
+            ]
+          }
+        },
+        {
+          name: "Financial Connections (Open Banking)", category: "detail",
+          details: {
+            pricing: ["Per-connection / per-account-link fee for securely linking a customer's external bank account (for ACH payments, balance/identity verification, underwriting data) — similar pricing logic to Plaid-style open banking products."],
+            revenue: ["Supports ACH-based payment methods (often cheaper than card interchange) and feeds underwriting data for Capital/Treasury — an enabling/infrastructure product that increases attach rate of other products rather than being a large standalone revenue line."],
+            challenges: ["Competing with established open-banking aggregators (Plaid, MX, Finicity/Mastercard) on coverage and reliability of bank connections across thousands of institutions."]
+          }
+        }
+      ]
+    },
+    // ---------------------------------------------------------
+    {
       name: "Tax",
       category: "line",
       children: [
@@ -413,6 +596,17 @@ const data = {
             ],
             revenue: ["Mostly small/niche revenue lines, but valuable for ecosystem lock-in and customer acquisition (Atlas funnels new startups directly into Stripe Payments)."],
             challenges: ["Justifying continued investment in low-revenue products that serve a strategic/ecosystem role rather than direct P&L contribution."]
+          }
+        },
+        {
+          name: "Stripe Projects (Agentic Commerce)", category: "detail",
+          details: {
+            pricing: ["New in 2025/2026: lets developers (or their AI coding agents) sign up for, purchase, and integrate Stripe services directly from the code editor/prompt — pricing follows the underlying products (Payments, Billing, etc.), but the DISTRIBUTION channel is now 'agent-initiated' rather than human-initiated."],
+            revenue: ["Part of 288 product/feature announcements at Stripe Sessions 2026 — signals a strategic bet that AI coding agents will become a major new acquisition channel for Stripe's existing products."],
+            challenges: [
+              "Pricing/billing infrastructure must now support AI agents independently signing up and consuming services on behalf of a business — raises questions about authorization, spend limits, and fraud controls for non-human 'customers.'",
+              "Ties into 'streaming payments': combining Metronome's usage tracking with stablecoin micropayments (on Tempo) so businesses can charge AI agents per-token, in real time — a genuinely new pricing primitive (sub-cent, continuous billing) vs. traditional per-transaction or subscription models."
+            ]
           }
         }
       ]
@@ -467,6 +661,346 @@ const data = {
         }
       ]
     }
+      ] // end Stripe children
+    }, // end Stripe company node
+    // ===========================================================
+    // ADYEN
+    // ===========================================================
+    {
+      name: "Adyen",
+      category: "company",
+      children: [
+        {
+          name: "Company Snapshot",
+          category: "line",
+          children: [
+            {
+              name: "2024 Financials", category: "detail",
+              details: {
+                pricing: [
+                  "Take rate ~16.2 basis points (0.162%) in H2 2024 — roughly HALF Stripe's blended ~36 bps, reflecting Adyen's enterprise-heavy, interchange-plus pricing model.",
+                  "Tiered pricing model means take rate is EXPECTED to decline further as large customers scale — volume discounts are baked into the model by design."
+                ],
+                revenue: [
+                  "Net revenue €1,083M (~$1.17B) in 2024, +22% YoY — first time crossing €1B.",
+                  "Total processed volume >€1.2T (~$1.4T) — comparable scale to Stripe's TPV but ~4.4x less revenue captured from it."
+                ],
+                challenges: [
+                  "Take-rate compression is structural: as existing large customers (e.g. eBay-scale enterprises) grow volume, their effective rate drops — Adyen must constantly land new large logos to offset this.",
+                  "A single global platform (one codebase/contract for online + in-person + platforms) is a selling point but slows localized pricing experiments vs. Stripe's more modular, per-product pricing."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Adyen for Platforms",
+          category: "line",
+          children: [
+            {
+              name: "Platforms & Embedded Finance", category: "detail",
+              details: {
+                pricing: [
+                  "Bundles Digital + Unified Commerce (online/in-store/mobile) + Embedded Financial Products (issuing, lending-like products) into one platform contract — a direct competitor to Stripe Connect + Issuing + Capital combined.",
+                  "Embedded financial products are monetized via revenue share with platforms — same logic as Stripe Issuing/Treasury."
+                ],
+                revenue: [
+                  "Fastest-growing segment: €167.6B processed volume in 2024 (+51% YoY; +70% excluding eBay).",
+                  "Embedded finance is explicitly framed as a retention/stickiness lever — once a platform embeds Adyen-powered cards/lending, switching costs rise."
+                ],
+                challenges: [
+                  "Growth is partly amplified by eBay (a single huge customer) — pricing analysts must check 'ex-eBay' figures to see true platform momentum.",
+                  "Directly competes with Stripe Connect for the same marketplace customers — pricing and feature parity battles are intense."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Pricing Model & Differentiation",
+          category: "line",
+          children: [
+            {
+              name: "Interchange-Plus vs Flat-Rate", category: "detail",
+              details: {
+                pricing: [
+                  "Adyen prices close to true cost (interchange-plus / cost-plus) and is transparent about its markup — appeals to large enterprises that audit processing costs line-by-line.",
+                  "Stripe's flat 2.9%+30¢ bundles interchange + markup into one number for simplicity — better suited to SMBs who don't want to parse interchange tables."
+                ],
+                revenue: [
+                  "EMEA = 58% of revenue and the fastest-growing region (+27% YoY in 2024) — Adyen's roots and strongest base are European enterprise.",
+                  "North America growth has historically lagged EMEA, an area where Stripe is much stronger."
+                ],
+                challenges: [
+                  "Cost-plus pricing is harder to monetize via 'value-add' bolt-ons (fraud tools, billing, tax) the way Stripe does, since enterprise clients expect cost transparency across the board.",
+                  "Single-platform simplicity is a double-edged sword: less room for the à-la-carte pricing (Tax, Radar, Billing add-ons) that drives Stripe's attach-rate revenue growth."
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    // ===========================================================
+    // PAYPAL (incl. Braintree & Venmo)
+    // ===========================================================
+    {
+      name: "PayPal (incl. Braintree & Venmo)",
+      category: "company",
+      children: [
+        {
+          name: "Company Snapshot",
+          category: "line",
+          children: [
+            {
+              name: "2024 Financials", category: "detail",
+              details: {
+                pricing: [
+                  "Revenue splits into two buckets: (1) transaction revenue — a % + fixed fee on payment volume, and (2) revenue from other value-added services — interest on customer balances, partnerships, subscriptions, licensing.",
+                  "PayPal checkout-button pricing (~2.9% + fixed fee) is similar to Stripe's headline rate, but PayPal sells 'higher conversion via consumer trust' as the value justification, not lowest cost."
+                ],
+                revenue: [
+                  "Net revenue: $29.8B in 2024 — by far the largest of any competitor here (~5.8x Stripe's net revenue), but growing far more slowly (mid-single-digit % vs. Stripe's 28%).",
+                  "426M active accounts (391M consumer + 35M merchant) across ~200 markets — a two-sided consumer network effect Stripe doesn't have."
+                ],
+                challenges: [
+                  "Large incumbent vs. fast-growing challenger (Stripe) dynamic: massive revenue base but plateauing growth — a useful market-dynamics talking point.",
+                  "Reliant on a legacy consumer brand; younger users increasingly default to Venmo, Cash App, or Apple Pay instead of the PayPal button."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Braintree (Developer/Enterprise Payments)",
+          category: "line",
+          children: [
+            {
+              name: "Braintree Pricing & Positioning", category: "detail",
+              details: {
+                pricing: [
+                  "Standard rate ~2.99% + $0.49 per transaction (full-stack) — notably higher fixed fee than Stripe's $0.30, though large enterprise deals are heavily negotiated/custom.",
+                  "Historically marketed as the 'developer-friendly, unbranded' option within PayPal — PayPal's direct answer to Stripe's API-first positioning."
+                ],
+                revenue: [
+                  "Braintree is PayPal's enterprise/large-merchant processing arm — direct overlap with Stripe's Core Payments + Connect customer base.",
+                  "Folded into the $29.8B total PayPal revenue, not broken out separately in filings — a real data-availability constraint for analysts."
+                ],
+                challenges: [
+                  "Internal cannibalization risk: a merchant using Braintree-only (no PayPal wallet button) doesn't drive PayPal wallet volume — pricing/incentives must balance the two.",
+                  "Historically less developer mindshare than Stripe despite similar pricing — shows pricing alone doesn't win developer-first markets; docs/DX matter too."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Venmo & Consumer P2P",
+          category: "line",
+          children: [
+            {
+              name: "Monetizing Free P2P", category: "detail",
+              details: {
+                pricing: [
+                  "Peer-to-peer transfers are free when funded by bank account/balance; ~1.75% fee for instant transfers to a debit card or bank.",
+                  "The 'Pay with Venmo' merchant checkout button is the real monetization layer — charges merchants similarly to PayPal's standard rate."
+                ],
+                revenue: [
+                  "Embedded within the $29.8B total; converting a hugely popular but lightly-monetized consumer product into merchant revenue is a recurring theme in PayPal's investor commentary.",
+                  "Growing 'Pay with Venmo' merchant adoption is the key lever."
+                ],
+                challenges: [
+                  "Classic two-sided pricing problem: charging consumers for a free P2P product they love risks churn to Cash App/Zelle, so monetization has to come from the merchant side instead.",
+                  "Zelle (bank-operated, free P2P) is a structurally cheaper competitor with no need to monetize — caps how much Venmo can ever charge consumers."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Market Position",
+          category: "line",
+          children: [
+            {
+              name: "Scale vs Growth", category: "detail",
+              details: {
+                pricing: [
+                  "Largest player by market share (~43% of global online payment processing) but with the most 'legacy' pricing structure — less modular/add-on-driven than Stripe's product suite."
+                ],
+                revenue: [
+                  "~43% global online payments market share vs. Stripe's ~20-29% — together PayPal + Stripe cover ~65-75% of the market.",
+                  "PayPal's growth rate is markedly slower than Stripe (28%) or Adyen (22%), making it the 'mature incumbent' in any growth-rate comparison."
+                ],
+                challenges: [
+                  "Defending share against faster-growing, product-led challengers (Stripe) on one side and embedded-finance-native consumer wallets (Cash App/Zelle) on the other, while managing a much larger, more complex legacy business."
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    // ===========================================================
+    // BLOCK (Square & Cash App)
+    // ===========================================================
+    {
+      name: "Block (Square & Cash App)",
+      category: "company",
+      children: [
+        {
+          name: "Company Snapshot",
+          category: "line",
+          children: [
+            {
+              name: "2024 Financials", category: "detail",
+              details: {
+                pricing: [
+                  "Two-sided ecosystem pricing: Square monetizes SELLERS (transaction fees + software subscriptions), Cash App monetizes CONSUMERS (card interchange, BNPL, lending, instant-transfer fees)."
+                ],
+                revenue: [
+                  "~$22.1B gross revenue (2024); gross profit ~$8.9B (+18% YoY) — Square segment gross profit +15%, Cash App gross profit +21%.",
+                  "Valuation ~$37.2B (2025) — smallest of the major payments players in this comparison (vs. Stripe $106.7B, Adyen $49.4B)."
+                ],
+                challenges: [
+                  "Two very different pricing motions (B2B seller tools vs. B2C consumer fintech) under one roof — resource allocation between them is a constant strategic tension."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Square (Seller Ecosystem)",
+          category: "line",
+          children: [
+            {
+              name: "Square Pricing & SMB Focus", category: "detail",
+              details: {
+                pricing: [
+                  "In-person: ~2.6% + $0.10 per tap/swipe/chip transaction; Online: ~2.9% + $0.30 — plus subscription software fees for POS, payroll, inventory, and invoicing layered on top.",
+                  "Vertically integrated bundle (hardware + software + payments) vs. Stripe's API-first/unbundled model — Square sells an all-in-one box, Stripe sells building blocks."
+                ],
+                revenue: [
+                  "Square segment gross profit +15% YoY in 2024 — steady but slower than Stripe's overall growth."
+                ],
+                challenges: [
+                  "72% of UK merchants cite high transaction fees as a major challenge — price-sensitivity is a bigger perception issue for Square's SMB base than for Stripe's more developer/mid-market base.",
+                  "Directly competes with Stripe Terminal + Connect for SMB omnichannel (online + in-person) merchants."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Cash App (Consumer Finance)",
+          category: "line",
+          children: [
+            {
+              name: "Cash App Monetization", category: "detail",
+              details: {
+                pricing: [
+                  "Monetized via Cash App Card interchange, Afterpay/BNPL merchant fees, Cash App Borrow lending fees, and instant-deposit fees — a fintech 'super-app' pricing model, not a payments-processor model."
+                ],
+                revenue: [
+                  "Cash App gross profit +21% YoY in 2024; paycheck-deposit actives reached 2.5M (+25% YoY) — deepening monetization per user."
+                ],
+                challenges: [
+                  "Monthly active users flat at ~57M (+2% YoY) — user growth has stalled even as revenue-per-user rises, so future growth depends on monetization, not reach.",
+                  "Competes with Venmo (PayPal) and Zelle for the consumer P2P/banking wallet — a crowded, low-differentiation space."
+                ]
+              }
+            }
+          ]
+        },
+        {
+          name: "Market Position",
+          category: "line",
+          children: [
+            {
+              name: "Vertical Integration vs API-First", category: "detail",
+              details: {
+                pricing: [
+                  "Block's bundled hardware+software+fintech model trades pricing flexibility for simplicity — harder to 'unbundle' a price for a customer who only wants payments."
+                ],
+                revenue: [
+                  "Smallest valuation of the three major comparators (~$37.2B vs. Stripe $106.7B, Adyen $49.4B) — useful context for market-sizing style interview questions."
+                ],
+                challenges: [
+                  "Must defend SMB turf against Stripe (moving downmarket with Connect/Terminal) while Cash App simultaneously fights PayPal/Venmo for consumer wallet share — pressure on both fronts at once."
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    // ===========================================================
+    // HEAD-TO-HEAD COMPARISON
+    // ===========================================================
+    {
+      name: "Head-to-Head: Stripe vs Competitors",
+      category: "company",
+      children: [
+        {
+          name: "Pricing Model Comparison",
+          category: "line",
+          children: [
+            {
+              name: "Flat-Rate vs Interchange-Plus vs Bundled", category: "detail",
+              details: {
+                pricing: [
+                  "Stripe: flat all-in rate (2.9%+30¢) + modular à-la-carte add-ons (Billing, Tax, Radar) — optimized for self-serve simplicity AND enterprise upsell.",
+                  "Adyen: interchange-plus / cost-transparent, single global platform — optimized for large-enterprise trust and auditability.",
+                  "PayPal/Braintree: bundled brand-trust pricing (~2.9-3% + fixed fee) — the value prop is conversion lift from consumer recognition, not lowest cost.",
+                  "Block/Square: vertically integrated hardware+software+payments bundle (2.6-2.9% + subscriptions) — optimized for SMB all-in-one simplicity."
+                ],
+                revenue: [],
+                challenges: []
+              }
+            }
+          ]
+        },
+        {
+          name: "Revenue & Scale Comparison",
+          category: "line",
+          children: [
+            {
+              name: "2024 Numbers Side-by-Side", category: "detail",
+              details: {
+                pricing: [
+                  "Take-rate comparison is the single best 'pricing analyst' lens: Stripe ~36 bps blended vs. Adyen ~16 bps — Stripe captures more per dollar processed, largely via its add-on attach-rate strategy that Adyen's single-platform model doesn't replicate as aggressively."
+                ],
+                revenue: [
+                  "Net revenue/profit: PayPal $29.8B > Block gross profit $8.9B > Stripe $5.1B > Adyen ~€1.08B (~$1.17B).",
+                  "Growth rate (2024): Stripe +28% > Adyen +22% > Block (+15% Square / +21% Cash App gross profit) > PayPal (mid-single digits).",
+                  "Valuation (2025): Stripe $106.7B > Adyen $49.4B > Block $37.2B.",
+                  "Volume scale: Stripe TPV $1.4T ≈ Adyen processed volume >€1.2T (~$1.4T) — similar gross volume, very different revenue capture (take rate)."
+                ],
+                challenges: []
+              }
+            }
+          ]
+        },
+        {
+          name: "Strategic Challenges Comparison",
+          category: "line",
+          children: [
+            {
+              name: "What Each Company Is Fighting", category: "detail",
+              details: {
+                pricing: [],
+                revenue: [],
+                challenges: [
+                  "Stripe: defend its high attach-rate take rate against Adyen's enterprise push while keeping SMB pricing simple.",
+                  "Adyen: structural take-rate compression as large customers scale; needs constant new-logo growth to offset it.",
+                  "PayPal: mature incumbent facing a growth plateau, defending share vs. faster product-led challengers (Stripe) on one side and consumer wallets (Cash App/Zelle) on the other.",
+                  "Block: fighting on two fronts — Square vs. Stripe in SMB/omnichannel, and Cash App vs. Venmo/Zelle in consumer wallets — with stalled Cash App user growth."
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
   ]
 };
 
@@ -475,6 +1009,7 @@ const data = {
 // ============================================================
 const colors = {
   root: "#635bff",
+  company: "#ef476f",
   line: "#00d4ff",
   detail: "#ffd166"
 };
@@ -567,7 +1102,7 @@ function update(source) {
     .attr("transform", d => `translate(${d.y},${d.x})`);
 
   nodeUpdate.select("circle")
-    .attr("r", d => d.depth === 0 ? 12 : (d.data.category === "detail" ? 7 : 9))
+    .attr("r", d => d.depth === 0 ? 13 : (d.data.category === "company" ? 11 : (d.data.category === "detail" ? 7 : 9)))
     .attr("fill", d => colors[d.data.category] || "#999")
     .style("stroke", d => (d._children && !d.children) ? "#ffffff" : "#0a2540");
 
